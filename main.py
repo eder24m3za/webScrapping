@@ -1,18 +1,25 @@
+import json
 from WebDriverManager import WebDriverManager
 from GenericScraper import GenericScraper
-from Instruccions import transfermarkt_instructions, sofascore_instructions
+from ScraperInterface import ScraperInterface
+
+def load_instructions(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
 
 def main():
     web_driver_manager = WebDriverManager()
     web_driver_manager.setup_driver()
 
+    instructions = load_instructions('Instructions.json')['instructions']
+
     scraper = GenericScraper(web_driver_manager.driver)
-    
-    # Ejecutar scraping para Transfermarkt
-    scraper.scrape(transfermarkt_instructions)
-    
-    # Ejecutar scraping para SofaScore
-    #scraper.scrape(sofascore_instructions)
+
+    for site_instructions in instructions:
+        for site, actions in site_instructions.items():
+            print(f"Scraping {site}...")
+            site_scraper = ScraperInterface()
+            scraper.scrape(site_scraper, actions)
 
     web_driver_manager.close_driver()
 

@@ -12,7 +12,7 @@ class WebDriverManager:
         options.add_argument('--disable-extensions')
         service = Service(ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=service, options=options)
-        
+
     def close_driver(self):
         if self.driver:
             self.driver.quit()

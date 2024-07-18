@@ -3,11 +3,10 @@
         {
             "transfermarkt": [
                 {"action": "get", "url": "https://www.transfermarkt.mx"},
-                {"action": "click", "selector": {"by": "xpath", "value": "//button[@aria-label='Aceptar y continuar']"}, "wait": 5},
                 {"action": "write", "selector": {"by": "class", "value": "tm-header__input--search-field"}, "text": "Santos Laguna", "wait": 5},
-                {"action": "click", "selector": {"by": "tag", "value": "a[title='Santos Laguna']"}, "wait": 2},
+                {"action": "click", "selector": {"by": "class", "value": "tm-header__input--search-send"}, "wait": 5},
+                {"action": "click", "selector": {"by": "css", "value": "a[title='Santos Laguna']"}, "wait": 5},
                 {"action": "click", "selector": {"by": "css", "value": "a.sort-link.desc"}, "wait": 5},
-                {"action": "click", "selector": {"by": "css", "value": "a.sort-link.asc"}, "wait": 2},
                 {
                     "action": "extract",
                     "table": {"by": "class", "value": "items"},
