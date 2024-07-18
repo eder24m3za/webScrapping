@@ -10,7 +10,6 @@ class WebDriverManager:
         options = webdriver.ChromeOptions()
         options.add_argument('--start-maximized')
         options.add_argument('--disable-extensions')
-        options.add_argument('--ignore-certificate-errors')
         service = Service(ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=service, options=options)
         

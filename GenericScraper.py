@@ -1,20 +1,50 @@
-import pandas as pd
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
-class GenericScraper:
-    def __init__(self, driver):
-        self.driver = driver
-        self.data = []
+class ScraperInterface:
+    def scrape(self, driver, data, instructions):
+        self.execute_instructions(driver, data, instructions)
 
-    def scrape(self, instructions):
-        instructions(self.driver, self.data)
-        self.save_to_excel()
+    def execute_instructions(self, driver, data, instructions):
+        for instruction in instructions:
+            action = instruction.get("action")
+            if action == "get":
+                driver.get(instruction["url"])
+            elif action == "click":
+                element = self.find_element(driver, instruction["selector"])
+                element.click()
+            elif action == "write":
+                element = self.find_element(driver, instruction["selector"])
+                element.send_keys(instruction["text"])
+            elif action == "extract":
+                self.extract_data(driver, data, instruction)
 
-    def save_to_excel(self, filename='data.xlsx'):
-        df = pd.DataFrame(self.data)
-        df.to_excel(filename, index=False, engine='openpyxl')
-        print(f"Archivo Excel '{filename}' creado exitosamente.")
-    
-    def execute_instructions(self, instructions):
-        for action in instructions['instructions']:
-            if 'url' in action:
-                self.driver.get(action['url'])
+    def find_element(self, driver, selector):
+        by = selector.get("by")
+        value = selector.get("value")
+        if by == "xpath":
+            return driver.find_element(By.XPATH, value)
+        elif by == "css":
+            return driver.find_element(By.CSS_SELECTOR, value)
+        elif by == "class":
+            return driver.find_element(By.CLASS_NAME, value)
+        elif by == "tag":
+            return driver.find_element(By.TAG_NAME, value)
+        elif by == "name":
+            return driver.find_element(By.NAME, value)
+
+    def extract_data(self, driver, data, instruction):
+        table_selector = instruction["table"]
+        row_selector = instruction["row"]
+        cell_selectors = instruction["cells"]
+
+        table = self.find_element(driver, table_selector)
+        rows = table.find_elements(By.XPATH, row_selector)
+
+        for row in rows:
+            row_data = {}
+            for cell in cell_selectors:
+                cell_element = row.find_element(By.XPATH, cell["selector"])
+                row_data[cell["name"]] = cell_element.text
+            data.append(row_data)

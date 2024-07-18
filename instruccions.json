@@ -1,0 +1,40 @@
+{
+    "instructions": [
+        {
+            "transfermarkt": [
+                {"action": "get", "url": "https://www.transfermarkt.mx"},
+                {"action": "click", "selector": {"by": "xpath", "value": "//button[@aria-label='Aceptar y continuar']"}, "wait": 5},
+                {"action": "write", "selector": {"by": "class", "value": "tm-header__input--search-field"}, "text": "Santos Laguna", "wait": 5},
+                {"action": "click", "selector": {"by": "tag", "value": "a[title='Santos Laguna']"}, "wait": 2},
+                {"action": "click", "selector": {"by": "css", "value": "a.sort-link.desc"}, "wait": 5},
+                {"action": "click", "selector": {"by": "css", "value": "a.sort-link.asc"}, "wait": 2},
+                {
+                    "action": "extract",
+                    "table": {"by": "class", "value": "items"},
+                    "row": "./tr",
+                    "cells": [
+                        {"name": "Nombre", "selector": ".//td[@class='hauptlink']"},
+                        {"name": "Costo", "selector": ".//td[@class='rechts hauptlink']"}
+                    ]
+                }
+            ]
+        },
+        {
+            "sofascore": [
+                {"action": "get", "url": "https://www.sofascore.com"},
+                {"action": "write", "selector": {"by": "tag", "value": "form input"}, "text": "Santos Laguna", "wait": 1},
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/team/football/santos-laguna/1948']"}, "wait": 5},
+                {"action": "click", "selector": {"by": "css", "value": "button div.Box span.Text"}, "wait": 1},
+                {
+                    "action": "extract",
+                    "table": {"by": "class", "value": "Box.idbnlH"},
+                    "row": "./a",
+                    "cells": [
+                        {"name": "Nombre", "selector": ".//div[@class='Box kUNcqi']/span[@class='Text ietnEf']"},
+                        {"name": "Score", "selector": ".//span[@class='Text ietnEf']/div[@class='Box']/span[@class='Text lphHQM']"}
+                    ]
+                }
+            ]
+        }
+    ]
+}
