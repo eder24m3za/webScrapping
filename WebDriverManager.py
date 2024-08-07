@@ -10,7 +10,7 @@ class WebDriverManager:
         options = webdriver.ChromeOptions()
         options.add_argument('--start-maximized')
         options.add_argument('--disable-extensions')
-        service = Service(executable_path="c:/Users/egmr9/OneDrive/Documentos/9B Python/Practica 4/chrome/chromedriver.exe")
+        service = Service(executable_path="chrome/chromedriver.exe")
         self.driver = webdriver.Chrome(service=service, options=options)
 
     def close_driver(self):

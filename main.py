@@ -13,13 +13,12 @@ def main():
 
     instructions = load_instructions('Instructions.json')['instructions']
 
-    scraper = GenericScraper(web_driver_manager.driver)
-
     for site_instructions in instructions:
         for site, actions in site_instructions.items():
             print(f"Scraping {site}...")
+            scraper = GenericScraper(web_driver_manager.driver)
             site_scraper = ScraperInterface()
-            scraper.scrape(site_scraper, actions)
+            scraper.scrape(site_scraper, actions, site)
 
     web_driver_manager.close_driver()
 
