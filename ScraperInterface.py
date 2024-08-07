@@ -35,16 +35,21 @@ class ScraperInterface:
             return driver.find_element(By.NAME, value)
 
     def extract_data(self, driver, data, instruction):
+        print("extracting data")
         table_selector = instruction["table"]
         row_selector = instruction["row"]
         cell_selectors = instruction["cells"]
 
         table = self.find_element(driver, table_selector)
         rows = table.find_elements(By.XPATH, row_selector)
+        
+        print("table " + table.text)
+        print("rows " + str(len(rows)))
 
         for row in rows:
             row_data = {}
             for cell in cell_selectors:
                 cell_element = row.find_element(By.XPATH, cell["selector"])
                 row_data[cell["name"]] = cell_element.text
+                print("element " + cell_element.text)
             data.append(row_data)

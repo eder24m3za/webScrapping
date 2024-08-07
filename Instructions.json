@@ -10,7 +10,7 @@
                 {
                     "action": "extract",
                     "table": {"by": "class", "value": "items"},
-                    "row": "./tr",
+                    "row": ".//tbody/tr",
                     "cells": [
                         {"name": "Nombre", "selector": ".//td[@class='hauptlink']"},
                         {"name": "Costo", "selector": ".//td[@class='rechts hauptlink']"}
