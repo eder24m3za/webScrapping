@@ -18,7 +18,7 @@ def main():
             print(f"Scraping {site}...")
             scraper = GenericScraper(web_driver_manager.driver)
             site_scraper = ScraperInterface()
-            scraper.scrape(site_scraper, actions, site)
+            scraper.scrape(site_scraper, actions)
 
     web_driver_manager.close_driver()
 

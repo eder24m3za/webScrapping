@@ -6,9 +6,9 @@ class GenericScraper:
         self.driver = driver
         self.data = []
 
-    def scrape(self, scraper, instructions, site):
+    def scrape(self, scraper, instructions, excel='excel'):
         scraper.scrape(self.driver, self.data, instructions)
-        self.save_to_excel(site)
+        self.save_to_excel(excel)
 
     def save_to_excel(self, filename='excel'):
         df = pd.DataFrame(self.data)

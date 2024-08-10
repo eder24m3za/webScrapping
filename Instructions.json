@@ -1,6 +1,55 @@
 {
     "instructions": [
         {
+            "powerball": [
+                {"action": "get", "url": "https://www.lotto.net/es/powerball/resultados"},
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/es/powerball/resultados/2024']"}, "wait": 5},
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/es/powerball/resultados/agosto-07-2024']"}, "wait": 5},
+                {
+                    "action": "extract",
+                    "table": {"by": "class", "value": "section"},
+                    "row": ".//tr",
+                    "cells": [
+                        {"name": "Numero acertado", "selector": ".//td[1]", "by": "xpath"},
+                        {"name": "Premios", "selector": ".//td[2]", "by": "xpath"},
+                        {"name": "Ganadores", "selector": ".//td[3]", "by": "xpath"},
+                        {"name": "Fondo del premio", "selector": ".//td[4]", "by": "xpath"}
+                    ],
+                     "excel": "agosto"
+                },
+                {"action": "back"},
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/es/powerball/resultados/2024'"}, "wait": 5},
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/es/powerball/resultados/julio-29-2024'"}, "wait": 5},
+                {
+                    "action": "extract",
+                    "table": {"by": "class", "value": "section"},
+                    "row": ".//tr",
+                    "cells": [
+                        {"name": "Numero acertado", "selector": ".//td[1]", "by": "xpath"},
+                        {"name": "Premios", "selector": ".//td[2]", "by": "xpath"},
+                        {"name": "Ganadores", "selector": ".//td[3]", "by": "xpath"},
+                        {"name": "Fondo del premio", "selector": ".//td[4]", "by": "xpath"}
+                    ],
+                     "excel": "julio"
+                },
+                {"action": "back"},
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/es/powerball/resultados/2024']"}, "wait": 5},
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/es/powerball/resultados/junio-17-2024']"}, "wait": 5},
+                {
+                    "action": "extract",
+                    "table": {"by": "class", "value": "section"},
+                    "row": ".//tr",
+                    "cells": [
+                        {"name": "Numero acertado", "selector": ".//td[1]", "by": "xpath"},
+                        {"name": "Premios", "selector": ".//td[2]", "by": "xpath"},
+                        {"name": "Ganadores", "selector": ".//td[3]", "by": "xpath"},
+                        {"name": "Fondo del premio", "selector": ".//td[4]", "by": "xpath"}
+                    ],
+                     "excel": "junio"
+                }
+            ]
+        },
+        {
             "sofascore": [
                 {"action": "get", "url": "https://www.sofascore.com/es"},
                 {"action": "write", "selector": {"by": "css", "value": "form input"}, "text": "Santos Laguna", "wait": 1},
@@ -11,9 +60,9 @@
                     "table": {"by": "class", "value": "Box.idbnlH"},
                     "row": "./a",
                     "cells": [
-                        {"name": "Nombre", "selector": ".//div[@class='Box kUNcqi']/span[@class='Text ietnEf']"},
-                        {"name": "Score", "selector": ".//span[contains(@class, 'Text ietnEf')]/div[contains(@class, 'Box')]/span[contains(@class, 'Text lphHQM')]", "attribute": "aria-valuenow"}
-                    ]
+                        {"name": "Nombre", "selector": ".//div[@class='Box kUNcqi']/span[@class='Text ietnEf']", "by": "xpath"},
+                        {"name": "Score", "selector": ".//span[contains(@class, 'Text ietnEf')]/div[contains(@class, 'Box')]/span[contains(@class, 'Text lphHQM')]", "attribute": "aria-valuenow", "by": "xpath"}
+                    ], "excel": "sofascore.xlsx"
                 }
             ]
         },
@@ -29,10 +78,29 @@
                     "table": {"by": "class", "value": "items"},
                     "row": ".//tr",
                     "cells": [
-                        {"name": "Nombre", "selector": ".//td[@class='hauptlink']//a"},
-                        {"name": "Costo", "selector": ".//td[@class='rechts hauptlink']"}
-                    ]
+                        {"name": "Nombre", "selector": ".//td[@class='hauptlink']//a", "by": "xpath"},
+                        {"name": "Costo", "selector": ".//td[@class='rechts hauptlink']", "by": "xpath"}
+                    ],
+                    "excel": "transfermarkt.xlsx"
                 }
+            ]
+        },
+        {
+            "etlGlobalPublished": [
+                {"action": "get", "url": "https://eltglobalpublishers.com/login"},
+                {"action": "write", "selector": {"by": "xpath", "value": "//input[contains(@type, 'email')]"}, "text": "egmr.49@gmail.com", "wait": 1},
+                {"action": "write", "selector": {"by": "xpath", "value": "//input[contains(@type, 'password')]"}, "text": "Ed182160507*6", "wait": 1},
+                {"action": "click", "selector": {"by": "css", "value": "button.btnELT"}, "wait": 5},                
+                {"action": "click", "selector": {"by": "css", "value": "a[href='/my-activities']"}, "wait": 5},                
+                {
+                    "action": "extract",
+                    "table": {"by": "xpath", "value": "//div[contains(@class, 'accordion')]"},
+                    "row": ".//div[contains(@class, 'accordion-item')]",
+                    "cells": [
+                        {"name": "Nombre", "selector": ".//div[contains(@class, 'accordion-title')]/div[1]", "by": "xpath"},
+                        {"name": "Score", "selector": ".//div[contains(@class, 'accordion-title')]/div[2]", "by": "xpath"}
+                    ], "excel": "etlGlobalPublished.xlsx"
+                }                
             ]
         }
     ]
